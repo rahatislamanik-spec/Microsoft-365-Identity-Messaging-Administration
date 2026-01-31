@@ -47,3 +47,22 @@ It reflects real-world administrative tasks commonly performed by Microsoft 365 
 
 ## Project Purpose
 This project was created to showcase practical Microsoft 365 administration skills and to demonstrate readiness for junior to intermediate Microsoft 365 / Cloud Administrator roles.
+
+---
+
+## Screenshots
+
+### Microsoft 365 Admin Center – Users
+![Microsoft 365 Admin Users](screenshots/01_m365_admin_users.jpg)
+
+### PowerShell – Create Microsoft 365 Users
+![PowerShell Create Users](screenshots/02_powershell_create_users.jpg)
+
+### Microsoft 365 – Help Desk Group Created
+![Help Desk Group Created](screenshots/03_m365_helpdesk_group_created.jpg)
+
+### PowerShell – Verify Users
+![PowerShell Verify Users](screenshots/04_powershell_verify_users.jpg)
+
+### Project Logo
+![Project Logo](screenshots/05_project_logo.jpg)
