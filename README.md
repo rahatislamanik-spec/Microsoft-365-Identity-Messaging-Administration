@@ -17,6 +17,30 @@ This project covers initial Microsoft 365 tenant deployment: identity and access
 
 ---
 
+## Architecture Overview
+
+The deployment is organized into four service areas, supported by a shared automation layer for provisioning and verification:
+
+```mermaid
+flowchart TD
+    A["Cloud Nine Wellness<br/>3 studio locations · ~25 staff"] --> B[M365 Tenant]
+
+    subgraph B[Microsoft 365 Tenant]
+        C["Identity & Access<br/>Entra ID, RBAC, Licensing"]
+        D["Messaging<br/>Exchange Online, Shared Mailboxes"]
+        E["Collaboration & File Governance<br/>SharePoint, OneDrive"]
+        F["Security & Compliance<br/>Baseline tenant policy"]
+        G["Automation Layer<br/>PowerShell · Microsoft Graph · Exchange Online modules"]
+
+        C --> G
+        D --> G
+        E --> G
+        F --> G
+    end
+```
+
+---
+
 ## Scope of Work
 
 ### Identity & Access (Entra ID)
