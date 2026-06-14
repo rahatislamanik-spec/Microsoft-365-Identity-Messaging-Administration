@@ -1,53 +1,47 @@
-# Microsoft 365 Identity & Messaging Administration
+# Microsoft 365 Tenant Deployment — Cloud Nine Wellness
 
-### Entra ID · Exchange Online · SharePoint · PowerShell Automation · Security Governance
+### Entra ID · Exchange Online · SharePoint · PowerShell Automation · Security & Compliance
 
-**Md Rahat Islam Anik · George Brown College · Cloud Computing Technologies (T465) · Postgraduate**
+**Md Rahat Islam Anik**
 
 [![GitHub Repo](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/rahatislamanik-spec/microsoft-365-identity-messaging-administration)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-rahatislamanik-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/rahatislamanik)
 
 ---
 
-## Overview
+## Background
 
-This project covers hands-on Microsoft 365 administration across identity, messaging, collaboration, and security governance — with PowerShell automation running alongside portal configuration throughout.
+Cloud Nine Wellness operates three boutique fitness studios across the GTA with a combined staff of approximately 25 — front-desk, instructors, studio managers, and operations. The business had been operating without a managed email or identity system, relying on personal accounts and shared spreadsheets for day-to-day coordination.
 
-The work reflects the administrative layer that keeps an M365 tenant operational: user and license lifecycle management via Entra ID, Exchange Online mailbox and group configuration, SharePoint and OneDrive access governance, tenant-level security and compliance settings, and scripted automation using the Microsoft Graph and Exchange Online PowerShell modules.
-
-The PowerShell angle is deliberate. Portal-only administration doesn't scale. These scripts demonstrate the ability to move beyond the GUI and operate at the command line — the way enterprise M365 administrators actually work.
+This project covers initial Microsoft 365 tenant deployment: identity and access setup, mailbox and distribution configuration, file-sharing governance, and baseline security policy. Provisioning tasks were scripted via PowerShell to support repeatable onboarding as the organization adds staff.
 
 ---
 
-## What Was Built
+## Scope of Work
 
-### Microsoft Entra ID — Identity & Access Management
+### Identity & Access (Entra ID)
 
-User accounts, security groups, and Microsoft 365 groups were created and managed through Microsoft Entra ID (Azure AD). Role-Based Access Control (RBAC) was applied to assign administrative permissions at the appropriate scope — ensuring users hold only the access their role requires.
+Staff accounts were provisioned and organized into security groups by role and location. Access was scoped by group — front-desk and instructor accounts are excluded from billing and tenant administration. Licenses were assigned and verified through both the Admin Center and PowerShell.
 
-Microsoft 365 licenses were assigned and managed across accounts, with license states verified through both the Admin Center and PowerShell output.
+### Messaging (Exchange Online)
 
-### Exchange Online — Messaging Administration
+Shared mailboxes were configured for front-desk operations, enabling multiple staff to manage client correspondence without individual credentials. Distribution groups were set up per location for scheduling and shift communication.
 
-Shared mailboxes were created and configured for team access scenarios — allowing multiple users to send from and monitor a common mailbox without shared credentials. Distribution groups were set up for department-level email routing, with membership and delivery settings configured and verified.
+### Collaboration & File Governance (SharePoint / OneDrive)
 
-### SharePoint Online & OneDrive — Collaboration Governance
+Tenant-level sharing policies were configured, with external sharing restricted by default — applicable given the handling of client intake forms and basic personal information.
 
-SharePoint Online site administration and OneDrive access policies were configured at the tenant level. Access controls were applied to govern who can share, view, and manage content across the collaboration layer.
+### Security & Compliance
 
-### Security & Compliance — Tenant Governance
+Baseline tenant security and compliance policies were applied through the Microsoft 365 Security & Compliance Center, establishing a consistent governance starting point.
 
-Security and compliance settings were configured through the Microsoft 365 Security & Compliance Center. Tenant-level governance controls were applied to enforce organizational policy across the environment.
+### Automation (PowerShell — Microsoft Graph & Exchange Online)
 
-### PowerShell Automation — Microsoft Graph & Exchange Online Modules
+Provisioning and verification were scripted to reduce repetitive portal work:
 
-PowerShell was used throughout this project to automate administrative tasks that would otherwise require repetitive portal interaction. Using the Microsoft Graph PowerShell SDK and Exchange Online Management Module:
-
-- **User creation** — accounts provisioned via script with correct attributes and license assignments
-- **Group management** — Help Desk and distribution groups created and populated via command line
-- **Verification** — user and group states queried and confirmed through PowerShell output
-
-This scripting approach reflects how enterprise M365 administrators handle bulk operations, onboarding automation, and audit-ready provisioning — not one-off portal clicks, but repeatable, documented commands.
+- **User provisioning** — accounts created via script with correct attributes and license assignments
+- **Group management** — groups created and populated via command line
+- **Verification** — configuration confirmed through PowerShell output
 
 ---
 
@@ -71,16 +65,16 @@ This scripting approach reflects how enterprise M365 administrators handle bulk 
 
 ## Screenshots
 
-### Microsoft 365 Admin Center — Users
+### Microsoft 365 Admin Center — User & License Management
 ![Microsoft 365 Admin Users](screenshots/01_m365_admin_users.jpg)
 
-### PowerShell — Create Microsoft 365 Users
+### PowerShell — Staff Account Provisioning
 ![PowerShell Create Users](screenshots/02_powershell_create_users.jpg)
 
-### Microsoft 365 — Help Desk Group Created
+### Microsoft 365 — Group Configuration
 ![M365 Help Desk Group Created](screenshots/03_m365_helpdesk_group_created.jpg)
 
-### PowerShell — Verify Users
+### PowerShell — Configuration Verification
 ![PowerShell Verify Users](screenshots/04_powershell_verify_users.jpg)
 
 ### Project Overview
@@ -91,7 +85,6 @@ This scripting approach reflects how enterprise M365 administrators handle bulk 
 ## Author
 
 **Md Rahat Islam Anik**
-Cloud Computing & Network Administration · George Brown College · May 2026
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=flat&logo=linkedin)](https://linkedin.com/in/rahatislamanik)
 [![GitHub](https://img.shields.io/badge/GitHub-Portfolio-181717?style=flat&logo=github)](https://github.com/rahatislamanik-spec)
