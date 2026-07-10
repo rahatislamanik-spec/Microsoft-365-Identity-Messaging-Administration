@@ -1,5 +1,7 @@
 # Microsoft 365 Tenant Deployment — Cloud Nine Wellness
 
+> **Status:** Portfolio Complete — v1.0
+
 ### Entra ID · Exchange Online · SharePoint · PowerShell Automation · Security & Compliance
 
 **Md Rahat Islam Anik**
