@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Microsoft 365 Tenant Deployment — Cloud Nine Wellness</title>
+<style>
+  :root {
+    --azure-blue: #0078D4;
+    --azure-dark: #1a3c6e;
+    --azure-light: #eef6fc;
+    --m365-teal: #00B4D8;
+    --text-dark: #1f2933;
+    --text-muted: #5a6470;
+    --border-soft: #dbe7f3;
+    --bg-page: #f4f8fb;
+    --green: #1a7a3c;
+    --green-bg: #e6f4ea;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg-page); color: var(--text-dark); line-height: 1.6; }
+
+  /* NAV */
+  nav { background: var(--azure-dark); padding: 14px 32px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+  nav .brand { color: #fff; font-weight: 700; font-size: 0.95rem; margin-right: auto; }
+  nav a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 0.88rem; transition: color 0.2s; }
+  nav a:hover { color: #fff; }
+
+  /* HERO */
+  .hero { background: linear-gradient(135deg, var(--azure-dark) 0%, #1565C0 60%, var(--m365-teal) 100%); color: #fff; padding: 52px 32px 44px; text-align: center; }
+  .hero-badge { display: inline-block; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); border-radius: 20px; padding: 4px 16px; font-size: 0.82rem; margin-bottom: 16px; }
+  .hero h1 { font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
+  .hero .subtitle { font-size: 1rem; opacity: 0.88; margin-bottom: 20px; }
+  .hero-pills { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 24px; }
+  .hero-pill { background: rgba(255,255,255,0.15); border-radius: 20px; padding: 5px 14px; font-size: 0.82rem; }
+  .hero-links { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .hero-links a { background: rgba(255,255,255,0.2); color: #fff; text-decoration: none; padding: 8px 20px; border-radius: 8px; font-size: 0.88rem; font-weight: 600; border: 1px solid rgba(255,255,255,0.3); transition: background 0.2s; }
+  .hero-links a:hover { background: rgba(255,255,255,0.3); }
+
+  /* CONTAINER */
+  .container { max-width: 1060px; margin: 0 auto; padding: 40px 24px; }
+
+  /* CARDS */
+  .card { background: #fff; border: 1px solid var(--border-soft); border-radius: 12px; padding: 28px 32px; margin-bottom: 28px; box-shadow: 0 2px 12px rgba(13,71,161,0.06); }
+  .card h2 { font-size: 1.2rem; font-weight: 700; color: var(--azure-dark); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+  .card h2 .icon { font-size: 1.3rem; }
+  .card p { color: var(--text-muted); font-size: 0.93rem; margin-bottom: 10px; }
+
+  /* ARCHITECTURE */
+  .arch-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 16px; }
+  .arch-layer { border-radius: 10px; padding: 16px 20px; border-left: 4px solid var(--azure-blue); background: var(--azure-light); }
+  .arch-layer h3 { font-size: 0.9rem; font-weight: 700; color: var(--azure-dark); margin-bottom: 6px; }
+  .arch-layer p { font-size: 0.83rem; color: var(--text-muted); margin: 0; }
+  .arch-automation { grid-column: 1 / -1; border-left-color: var(--m365-teal); background: #e0f7fa; }
+
+  /* SCOPE CARDS */
+  .scope-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 16px; }
+  .scope-card { border: 1px solid var(--border-soft); border-radius: 10px; padding: 18px 20px; }
+  .scope-card h3 { font-size: 0.9rem; font-weight: 700; color: var(--azure-dark); margin-bottom: 8px; }
+  .scope-card ul { padding-left: 16px; }
+  .scope-card li { font-size: 0.83rem; color: var(--text-muted); margin-bottom: 4px; }
+
+  /* TECH TABLE */
+  table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 0.88rem; }
+  th { background: var(--azure-blue); color: #fff; padding: 10px 14px; text-align: left; }
+  td { padding: 9px 14px; border-bottom: 1px solid var(--border-soft); color: var(--text-muted); }
+  tr:nth-child(even) td { background: #fafcfe; }
+
+  /* SCRIPTS */
+  .script-list { display: flex; flex-direction: column; gap: 10px; margin-top: 14px; }
+  .script-item { display: flex; align-items: flex-start; gap: 14px; background: var(--azure-light); border-radius: 8px; padding: 14px 16px; }
+  .script-num { background: var(--azure-blue); color: #fff; font-size: 0.78rem; font-weight: 700; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .script-info h4 { font-size: 0.88rem; font-weight: 700; color: var(--azure-dark); font-family: 'Courier New', monospace; margin-bottom: 3px; }
+  .script-info p { font-size: 0.82rem; color: var(--text-muted); margin: 0; }
+
+  /* SCREENSHOTS */
+  .screenshot-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 16px; }
+  .screenshot-item { border-radius: 8px; overflow: hidden; border: 1px solid var(--border-soft); }
+  .screenshot-item img { width: 100%; display: block; }
+  .screenshot-caption { padding: 8px 12px; font-size: 0.8rem; color: var(--text-muted); background: #fafcfe; }
+
+  /* SKILLS */
+  .skills-wrap { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .skill-tag { background: var(--azure-light); color: var(--azure-dark); border: 1px solid var(--border-soft); padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
+
+  /* FOOTER */
+  footer { text-align: center; padding: 28px; color: var(--text-muted); font-size: 0.82rem; border-top: 1px solid var(--border-soft); background: #fff; }
+  footer a { color: var(--azure-blue); text-decoration: none; }
+
+  @media (max-width: 680px) {
+    .arch-grid, .scope-grid, .screenshot-grid { grid-template-columns: 1fr; }
+    .arch-automation { grid-column: 1; }
+    .hero h1 { font-size: 1.4rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="brand">Microsoft 365 Administration</span>
+  <a href="https://github.com/rahatislamanik-spec/Microsoft-365-Identity-Messaging-Administration">GitHub Repo</a>
+  <a href="scripts/">Scripts</a>
+  <a href="docs/Cloud-Nine-Wellness-M365-Deployment-Runbook.md">Runbook</a>
+  <a href="https://linkedin.com/in/rahatislamanik">LinkedIn</a>
+  <a href="https://rahatislamanik-spec.github.io/IT-Portfolio-Rahat-Islam-Anik/">Portfolio</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge">Portfolio Complete — v1.0</div>
+  <h1>Microsoft 365 Tenant Deployment</h1>
+  <div class="subtitle">Cloud Nine Wellness — Identity, Messaging & Collaboration Setup for 3 GTA Studios</div>
+  <div class="hero-pills">
+    <span class="hero-pill">Microsoft Entra ID</span>
+    <span class="hero-pill">Exchange Online</span>
+    <span class="hero-pill">SharePoint Online</span>
+    <span class="hero-pill">PowerShell Automation</span>
+    <span class="hero-pill">Microsoft Graph SDK</span>
+    <span class="hero-pill">RBAC</span>
+  </div>
+  <div class="hero-links">
+    <a href="https://github.com/rahatislamanik-spec/Microsoft-365-Identity-Messaging-Administration">View on GitHub</a>
+    <a href="scripts/">View Scripts</a>
+    <a href="docs/Cloud-Nine-Wellness-M365-Deployment-Runbook.md">Deployment Runbook</a>
+    <a href="https://linkedin.com/in/rahatislamanik">LinkedIn</a>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- PROJECT SUMMARY -->
+  <div class="card">
+    <h2><span class="icon">📋</span> Project Summary</h2>
+    <p>Cloud Nine Wellness operates three boutique fitness studios across the Greater Toronto Area — King West, Yorkville, and Liberty Village — with a combined staff of approximately 17 employees spanning front-desk coordinators, fitness instructors, studio managers, and corporate operations.</p>
+    <p>The business had been operating without a managed identity or email system, relying on personal accounts and shared spreadsheets for day-to-day coordination. This project covers the complete initial Microsoft 365 tenant deployment: identity setup, mailbox and distribution configuration, file-sharing governance, baseline security policy, and PowerShell automation for repeatable onboarding.</p>
+    <p><strong>Outcome:</strong> A fully operational M365 tenant with 17 provisioned accounts, 7 security groups, 4 shared mailboxes, 5 distribution groups, and documented PowerShell scripts for future provisioning.</p>
+  </div>
+
+  <!-- ARCHITECTURE -->
+  <div class="card">
+    <h2><span class="icon">🏗️</span> Architecture Overview</h2>
+    <p>The deployment is organized into four service layers, all supported by a shared PowerShell automation layer using Microsoft Graph SDK and Exchange Online Management module.</p>
+    <div class="arch-grid">
+      <div class="arch-layer">
+        <h3>🔐 Identity & Access Layer</h3>
+        <p>Microsoft Entra ID — user accounts, security groups, RBAC, license assignment. Role-based group scoping ensures front-desk and instructor accounts are excluded from billing and tenant administration.</p>
+      </div>
+      <div class="arch-layer">
+        <h3>📧 Messaging Layer</h3>
+        <p>Exchange Online — shared mailboxes per studio location with FullAccess and SendAs permissions for front-desk staff. Distribution groups for scheduling and shift-wide communication.</p>
+      </div>
+      <div class="arch-layer">
+        <h3>📁 Collaboration Layer</h3>
+        <p>SharePoint Online and OneDrive — tenant-level sharing policies configured with external sharing restricted by default, appropriate for handling client intake forms and personal information.</p>
+      </div>
+      <div class="arch-layer">
+        <h3>🛡️ Security & Compliance Layer</h3>
+        <p>Baseline tenant security applied through Microsoft 365 Security and Compliance Center — establishing consistent governance before staff onboarding begins.</p>
+      </div>
+      <div class="arch-layer arch-automation">
+        <h3>⚡ Automation Layer — PowerShell · Microsoft Graph SDK · Exchange Online Module</h3>
+        <p>All provisioning and verification tasks scripted for repeatability. Five numbered scripts handle tenant connection, user creation, group configuration, messaging setup, and post-deployment verification. Designed so future hires can be onboarded by re-running the provisioning script with updated staff data.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCOPE OF WORK -->
+  <div class="card">
+    <h2><span class="icon">🎯</span> Scope of Work</h2>
+    <div class="scope-grid">
+      <div class="scope-card">
+        <h3>🔐 Identity & Access (Entra ID)</h3>
+        <ul>
+          <li>17 staff accounts provisioned across 3 locations</li>
+          <li>Microsoft 365 Business Standard licenses assigned</li>
+          <li>7 security groups created (role-based and location-based)</li>
+          <li>RBAC scoping — front desk and instructors excluded from admin roles</li>
+          <li>Forced password reset on first sign-in</li>
+        </ul>
+      </div>
+      <div class="scope-card">
+        <h3>📧 Messaging (Exchange Online)</h3>
+        <ul>
+          <li>4 shared mailboxes (one per studio + general inquiries)</li>
+          <li>FullAccess and SendAs permissions via security groups</li>
+          <li>Auto-mapping enabled for Outlook access</li>
+          <li>5 distribution groups (by location and by role)</li>
+          <li>Distribution group membership restricted (closed join)</li>
+        </ul>
+      </div>
+      <div class="scope-card">
+        <h3>📁 Collaboration & File Governance</h3>
+        <ul>
+          <li>Tenant-level SharePoint sharing policies configured</li>
+          <li>External sharing restricted by default</li>
+          <li>OneDrive for Business enabled for all licensed accounts</li>
+          <li>Appropriate for client intake data handling (basic PII)</li>
+        </ul>
+      </div>
+      <div class="scope-card">
+        <h3>🛡️ Security & Compliance</h3>
+        <ul>
+          <li>Baseline tenant security policies applied</li>
+          <li>Security and Compliance Center configuration</li>
+          <li>Post-deployment verification report generated</li>
+          <li>Rollback procedures documented in runbook</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <div class="card">
+    <h2><span class="icon">⚡</span> PowerShell Automation Scripts</h2>
+    <p>All provisioning work was scripted using the Microsoft Graph PowerShell SDK and Exchange Online Management module. Scripts run in numbered order, each building on the previous.</p>
+    <div class="script-list">
+      <div class="script-item">
+        <div class="script-num">1</div>
+        <div class="script-info">
+          <h4>01-Connect-M365Tenant.ps1</h4>
+          <p>Authenticates to Microsoft Graph (with required scopes) and Exchange Online. Verifies tenant identity, subscription details, and admin access before any provisioning begins.</p>
+        </div>
+      </div>
+      <div class="script-item">
+        <div class="script-num">2</div>
+        <div class="script-info">
+          <h4>02-Provision-StaffAccounts.ps1</h4>
+          <p>Creates 17 user accounts across King West, Yorkville, Liberty Village, and corporate. Assigns M365 Business Standard licenses. Forces password change on first sign-in.</p>
+        </div>
+      </div>
+      <div class="script-item">
+        <div class="script-num">3</div>
+        <div class="script-info">
+          <h4>03-Configure-Groups.ps1</h4>
+          <p>Creates 7 Entra ID security groups — by role (Instructors, FrontDesk, Managers) and by location (KingWest, Yorkville, LibertyVillage, Corporate). Populates all members.</p>
+        </div>
+      </div>
+      <div class="script-item">
+        <div class="script-num">4</div>
+        <div class="script-info">
+          <h4>04-Configure-Messaging.ps1</h4>
+          <p>Creates 4 shared mailboxes with FullAccess and SendAs permissions via security groups. Creates 5 distribution groups for location-wide and role-wide communication.</p>
+        </div>
+      </div>
+      <div class="script-item">
+        <div class="script-num">5</div>
+        <div class="script-info">
+          <h4>05-Verify-Configuration.ps1</h4>
+          <p>Post-deployment verification pass across users, groups, mailboxes, and distribution groups. Exports a timestamped summary report to confirm deployment state before client handoff.</p>
+        </div>
+      </div>
+    </div>
+    <p style="margin-top:14px;"><a href="https://github.com/rahatislamanik-spec/Microsoft-365-Identity-Messaging-Administration/tree/main/scripts" style="color:var(--azure-blue); font-weight:600;">View all scripts on GitHub →</a></p>
+  </div>
+
+  <!-- TECH STACK -->
+  <div class="card">
+    <h2><span class="icon">🛠️</span> Tech Stack</h2>
+    <table>
+      <thead><tr><th>Category</th><th>Tools & Services</th></tr></thead>
+      <tbody>
+        <tr><td>Identity & Access</td><td>Microsoft Entra ID (Azure AD) · RBAC · Security Groups · License Management</td></tr>
+        <tr><td>Messaging</td><td>Exchange Online · Shared Mailboxes · Distribution Groups · SendAs Permissions</td></tr>
+        <tr><td>Collaboration</td><td>SharePoint Online · OneDrive for Business · Sharing Policy Governance</td></tr>
+        <tr><td>Security</td><td>Microsoft 365 Security & Compliance Center · Baseline Tenant Policy</td></tr>
+        <tr><td>Automation</td><td>PowerShell · Microsoft Graph PowerShell SDK · Exchange Online Management Module</td></tr>
+        <tr><td>Administration</td><td>Microsoft 365 Admin Center · Entra ID Portal · Exchange Admin Center</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SCREENSHOTS -->
+  <div class="card">
+    <h2><span class="icon">📸</span> Evidence Screenshots</h2>
+    <p>Sanitized screenshots from the live M365 tenant deployment.</p>
+    <div class="screenshot-grid">
+      <div class="screenshot-item">
+        <img src="screenshots/01_m365_admin_users.jpg" alt="Microsoft 365 Admin Center — User and License Management">
+        <div class="screenshot-caption">Microsoft 365 Admin Center — User & License Management</div>
+      </div>
+      <div class="screenshot-item">
+        <img src="screenshots/02_powershell_create_users.jpg" alt="PowerShell — Staff Account Provisioning">
+        <div class="screenshot-caption">PowerShell — Staff Account Provisioning via Microsoft Graph</div>
+      </div>
+      <div class="screenshot-item">
+        <img src="screenshots/03_m365_helpdesk_group_created.jpg" alt="Microsoft 365 — Group Configuration">
+        <div class="screenshot-caption">Entra ID — Security Group Configuration</div>
+      </div>
+      <div class="screenshot-item">
+        <img src="screenshots/04_powershell_verify_users.jpg" alt="PowerShell — Configuration Verification">
+        <div class="screenshot-caption">PowerShell — Post-Deployment Configuration Verification</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SKILLS -->
+  <div class="card">
+    <h2><span class="icon">💡</span> Skills Demonstrated</h2>
+    <div class="skills-wrap">
+      <span class="skill-tag">Microsoft 365 Administration</span>
+      <span class="skill-tag">Microsoft Entra ID</span>
+      <span class="skill-tag">Identity & Access Management</span>
+      <span class="skill-tag">Exchange Online</span>
+      <span class="skill-tag">Shared Mailboxes</span>
+      <span class="skill-tag">Distribution Groups</span>
+      <span class="skill-tag">SharePoint Online</span>
+      <span class="skill-tag">OneDrive Governance</span>
+      <span class="skill-tag">PowerShell Automation</span>
+      <span class="skill-tag">Microsoft Graph SDK</span>
+      <span class="skill-tag">RBAC</span>
+      <span class="skill-tag">License Management</span>
+      <span class="skill-tag">Security & Compliance</span>
+      <span class="skill-tag">Tenant Configuration</span>
+      <span class="skill-tag">User Lifecycle Management</span>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Microsoft 365 Tenant Deployment — Cloud Nine Wellness · Portfolio Project by Md Rahat Islam Anik<br>
+  <a href="https://linkedin.com/in/rahatislamanik">LinkedIn</a> &nbsp;·&nbsp;
+  <a href="https://github.com/rahatislamanik-spec">GitHub</a> &nbsp;·&nbsp;
+  <a href="https://rahatislamanik-spec.github.io/IT-Portfolio-Rahat-Islam-Anik/">Full Portfolio</a>
+</footer>
+
+</body>
+</html>
